@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wtm.minipro.dao.UserDao">
+
+    <!--<typeAlias type="com.wtm.minipro.entity.User" alias="User"/>-->
+
+
+    <resultMap id="userResultMap" type="com.wtm.minipro.entity.User">
+        <id property="id" column="id"/>
+        <result property="sKey" column="s_key"/>
+        <result property="sessionkey" column="session_key"/>
+        <result property="nickName" column="nick_name"/>
+        <result property="avatarUrl" column="avatar_url"/>
+    </resultMap>
+
+
+    <select id="queryUser" resultType="com.wtm.minipro.entity.User" resultMap="userResultMap">
+        SELECT * FROM user
+        <where>
+            <if test="openid != null">openid=#{openid}</if>
+            <if test="unionid != null">AND unionid=#{unionid}</if>
+            <if test="sKey != null">AND s_key=#{sKey}</if>
+            <if test="sessionkey != null">AND session_key=#{sessionkey}</if>
+            <if test="nickName != null">AND nick_name=#{nickName}</if>
+            <if test="gender != null">AND gender=#{gender}</if>
+            <if test="country != null">AND country=#{country}</if>
+            <if test="province != null">AND province=#{province}</if>
+            <if test="city != null">AND city=#{city}</if>
+            <if test="avatarUrl != null">AND avatar_url=#{avatarUrl}</if>
+        </where>
+    </select>
+
+    <update id="updateUser" parameterType="com.wtm.minipro.entity.User">
+        UPDATE user
+        <set>
+            <if test="openid != null">openid=#{openid},</if>
+            <if test="unionid != null">unionid=#{unionid,</if>
+            <if test="sKey != null">s_key=#{sKey},</if>
+            <if test="sessionkey != null">session_key=#{sessionkey},</if>
+            <if test="nickName != null">nick_name=#{nickName},</if>
+            <if test="gender != null">gender=#{gender},</if>
+            <if test="country != null">country=#{country},</if>
+            <if test="province != null">province=#{province},</if>
+            <if test="city != null">city=#{city},</if>
+            <if test="avatarUrl != null">avatar_url=#{avatarUrl}</if>
+        </set>
+        <where>
+            <if test="openid != null">openid=#{openid}</if>
+            <if test="sKey != null">OR s_key=#{sKey}</if>
+        </where>
+    </update>
+
+
+    <insert id="insertUser" parameterType="com.wtm.minipro.entity.User">
+        INSERT INTO user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="openid != null">openid,</if>
+            <if test="unionid != null">unionid,</if>
+            <if test="sKey != null">s_key,</if>
+            <if test="sessionkey != null">session_key,</if>
+            <if test="nickName != null">nick_name,</if>
+            <if test="gender != null">gender,</if>
+            <if test="country != null">country,</if>
+            <if test="province != null">province ,</if>
+            <if test="city != null">city ,</if>
+            <if test="avatarUrl != null">avatar_url,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="openid != null">#{openid},</if>
+            <if test="unionid != null">#{unionid},</if>
+            <if test="sKey != null">#{sKey},</if>
+            <if test="sessionkey != null">#{sessionkey},</if>
+            <if test="nickName != null">#{nickName},</if>
+            <if test="gender != null">#{gender},</if>
+            <if test="country != null">#{country},</if>
+            <if test="province != null">#{province} ,</if>
+            <if test="city != null">#{city},</if>
+            <if test="avatarUrl != null">#{avatarUrl},</if>
+        </trim>
+    </insert>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
