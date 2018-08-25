@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!--1.配置目标类-->
+    <bean id="studentDao" class="com.imooc.aop.SpringAopBeforeAdvice.StudentDaoImpl"/>
+
+
+    <!--3.前置通知类型-->
+    <bean id="myBeforeAdvice" class="com.imooc.aop.SpringAopBeforeAdvice.MyBeforeAdvice"/>
+
+    <!--4.spring的aop产生代理对象-->
+    <bean id="studentDaoProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <!--要增强的目标对象-->
+        <property name="target" ref="studentDao"/>
+        <!--配置类所实现的接口-->
+        <property name="proxyInterfaces" value="com.imooc.aop.SpringAopBeforeAdvice.StudentDao"/>
+        <!--配置使用哪种增强-->
+        <property name="interceptorNames" value="myBeforeAdvice"/>
+
+        <!--表示使用Cglib方式， 默认是jdkproxy-->
+        <property name="optimize" value="true"/>
+
+    </bean>
+
+</beans>

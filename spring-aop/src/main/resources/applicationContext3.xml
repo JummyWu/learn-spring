@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!--1.配置目标类-->
+    <bean id="customerDao" class="com.imooc.aop.SpringAopAutoProxy.CustomerDao"/>
+    <bean id="studentDao" class="com.imooc.aop.SpringAopAutoProxy.StudentDaoImpl"/>
+
+    <!-- 配置增强 -->
+    <bean id="myBeforeAdvice" class="com.imooc.aop.SpringAopAutoProxy.MyBeforeAdvice"/>
+    <bean id="myAroundAdvice" class="com.imooc.aop.SpringAopAutoProxy.MyAroundAdvice"/>
+
+    <!--自动代理配置
+
+        给beanNames下的目标类 增强了myBeforeAdvice
+    -->
+    <bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+
+        <!--value 指向目标类-->
+        <property name="beanNames" value="*Dao" />
+
+        <!-- 使用哪种增强  -->
+        <property name="interceptorNames" value="myBeforeAdvice" />
+
+    </bean>
+
+
+
+
+
+
+</beans>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!--1.配置目标类-->
+    <bean id="customerDao" class="com.imooc.aop.SpringAopAroundAdvice.CustomerDao"/>
+
+
+    <!--3.通知类型-->
+    <bean id="myAroundAdvice" class="com.imooc.aop.SpringAopAroundAdvice.MyAroundAdvice"/>
+
+
+    <!--
+      一般的切面是使用通知作为切面
+      要对目标类的某个方法进行增强就需要配置一个带有切入点的切面
+  -->
+    <bean id="myAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+        <!--
+            .* 表示所有方法
+            .*save.*
+        -->
+        <!--<property name="pattern" value=".*save.*"/>-->
+
+
+        <property name="patterns" value=".*save.*,.*delete.*"/>
+
+
+
+        <!--使用哪种通知-->
+        <property name="advice" ref="myAroundAdvice"/>
+    </bean>
+
+
+    <!--4.spring的aop产生代理对象-->
+    <bean id="customerDaoProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <!--要增强的目标对象-->
+        <property name="target" ref="customerDao"/>
+        <!-- 普通类的配置 -->
+        <property name="proxyTargetClass" value="true"/>
+        <!--使用增强-->
+        <property name="interceptorNames" value="myAdvisor"/>
+    </bean>
+
+
+
+
+</beans>
